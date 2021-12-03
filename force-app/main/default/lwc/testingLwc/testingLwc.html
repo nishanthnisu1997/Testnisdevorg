@@ -1,0 +1,122 @@
+<template>
+    <lightning-tabset variant="scoped" active-tab-value={tabval}>
+    <lightning-tab label="Account" value='Account' onclick={handletab} >
+      <!--  <lightning-button label="New" onclick={handleNew}></lightning-button>-->
+        <lightning-button label="Delete" onclick={handleDeleteCheck} ></lightning-button>
+        <c-child-component-account onacctid={handleacctId}></c-child-component-account>
+
+        <Lightning-card>
+
+            <table class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            <lightning-input type="checkbox"></lightning-input>
+    
+                        </th>
+                        <th>
+                            Account name
+                        </th>
+                        <th>
+                            Phone
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            Industry
+                        </th>
+                        <th>
+                            Action
+                        </th>    
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={accountstore} for:item="acc">
+                       <tr key={acc.Id}>
+                        <td>
+                            <lightning-input type="checkbox"  value={acc.Id} onchange={handleSelect} ></lightning-input>
+                     <!--                            <lightning-input type="checkbox" data-accountid={acc.Id} value={acc.Id} onchange={handleSelect} ></lightning-input>-->
+                        </td>
+                        <td>
+                            {acc.Name}
+                        </td>
+                        <td>
+                            {acc.Phone}
+                        </td>
+                        <td>
+                            {acc.Type}
+                        </td>
+                        <td>
+                            {acc.Industry}
+                        </td>
+                        <td>
+                            <lightning-button value={acc.Id} label="Edit" onclick={handleEdit}></lightning-button> &nbsp;
+                            <lightning-button value={acc.Id} label="Delete" onclick={handleDelete}></lightning-button>
+                        </td>
+                       </tr>
+                    </template>
+</tbody>
+</table>
+
+</Lightning-card>
+
+
+<!--<section if:true={showNew} role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+        <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                  <svg class="slds-button__icon slds-button__icon_large" aria-hidden="false">
+                  </svg>
+                  <span class="slds-assistive-text">Close</span>
+                </button>
+            <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Modal header</h2>
+            <p>create Account</p>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        </div>
+
+    </div>
+</section>-->
+
+<section if:true={showEdit} role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+        <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                  <svg class="slds-button__icon slds-button__icon_large" aria-hidden="false">
+                  </svg>
+                  <span class="slds-assistive-text">Close</span>
+                </button>
+            <h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Modal header</h2>
+            <p>Edit Account</p>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+            <lightning-record-edit-form object-api-name={objectApiName} record-id={recId} onsuccess={handleEditSuccess}>
+                <lightning-output-field field-name={recId}>
+                </lightning-output-field>
+                <lightning-input-field field-name=Name>
+                </lightning-input-field>
+                <lightning-input-field field-name='Phone'>
+                </lightning-input-field>
+                <lightning-input-field field-name='Type'>
+                </lightning-input-field>
+                <div class="slds-var-m-top_medium">
+                    <lightning-button variant="brand" type="submit" label="Save">
+                    </lightning-button>
+                    <lightning-button variant="brand" label="Close" onclick={handleClose}>
+                    </lightning-button>
+                </div>
+            </lightning-record-edit-form>
+
+        </div>
+
+    </div>
+</section>
+</lightning-tab>
+<lightning-tab label="Related Contact" value='Related Contact'>
+    <c-child-componenent-contact accrec-id={accountrecId}></c-child-componenent-contact>
+
+</lightning-tab>
+</lightning-tabset>
+
+</template>

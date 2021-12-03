@@ -1,0 +1,12 @@
+<template>
+    <template if:true={innerloderopen}>
+        <lightning-spinner alternative-text="Loading..." size="small" variant="brand"></lightning-spinner>
+    </template>
+    <lightning-record-edit-form onsuccess={handleSuccess} onload={onloaddatahand} object-api-name={objectname} class="slds-cell-wrap slds-popover__body" onclick={stophidechlcomp} record-id={recordid}  onerror={handleError}>
+        <lightning-input-field  field-name={fieldname} ></lightning-input-field>
+        <div style="text-align: center;">
+        <lightning-button type="submit" label="Update" variant="brand" class="slds-m-left_x-small" ></lightning-button>
+        <lightning-button variant="brand-outline" label="Cancel"  onclick={handleClickCancel} class="slds-m-left_x-small"></lightning-button>                  
+        </div>
+    </lightning-record-edit-form>
+</template>

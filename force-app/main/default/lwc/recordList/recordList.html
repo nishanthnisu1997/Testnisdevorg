@@ -1,0 +1,150 @@
+<template>  
+        <lightning-card  onclick={handlerParentComp}>
+            <div class="slds-card__header slds-grid" style="padding: 0px 0px 0px 15px;">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate" style="padding: 0px 0px 10px 0px;">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name="custom:custom63" alternative-text="Click to Call" size="medium" class="slds-icon slds-input__icon slds-input__icon_right "></lightning-icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2>
+                            <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Account List">
+                                <span class="slds-text-heading_small">{tableHeadName}</span>
+                            </a>
+                        </h2>
+                    </div>
+                </header>
+                  <template if:true={GlobalSearchEnable}>
+                    <div class="slds-no-flex" >
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                                <lightning-input variant="label-hidden" type="search" onchange={handleKeyChangeForData} class="slds-m-bottom_small" placeholder="Globel Search..." 
+                                value={datasearchkey}></lightning-input> 
+                        </div>		
+                    </div>
+                  </template>
+                    <div class="slds-no-flex" style="margin-top: 0px;margin-left: 20px;">
+                        <div class="slds-media__figure">
+                             <template if:true={GlobalFilterEnable}>
+                               <lightning-icon onmouseover={filterHandler} icon-name="utility:filterList" alternative-text="Click to Call" size="small" class="slds-icon slds-input__icon slds-input__icon_right "></lightning-icon>
+                              </template>
+                              <template if:true={ColumnShowHideMenu}>
+                               <lightning-icon onmouseover={columnMenuHandler} icon-name="utility:locker_service_api_viewer" alternative-text="Click to Call" size="small" class="slds-icon slds-input__icon slds-input__icon_right"></lightning-icon>
+                              </template>
+                            <div if:true={tableFilterMenu}>
+                              <c-table-filter ontabelfilter={tabledatafilter} startdate={startdate} enddate={enddate}></c-table-filter>  
+                            </div> 
+                            <div if:true={showColumnMenu}>
+                              <c-table-column-add-remove ontabelcolumnshowhide={tabledataupdate} column-manu-select={columnManuSelect} ></c-table-column-add-remove>                       
+                           </div>
+                          </div>		
+                    </div>
+            </div>   
+          <div class="slds-m-around_medium">  
+            <template if:true={loderopen}>
+                    <div>
+                        <lightning-spinner alternative-text="Loading..." size="medium" variant="brand"></lightning-spinner>
+                    </div>
+            </template> 
+            <template if:true={fieldsLable}>  
+              <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">  
+                <thead>  
+                  <tr class="slds-text-heading_label"> 
+                  <template if:true={SelectRowAction}>
+                    <th  scope="col" style="width:84px;">
+                      <lightning-input type="checkbox" class="selectAllcheckedrecCls selectchk" data-id="selectAllcheckedrecId" name="false"  onchange={handleChangeAllRec}></lightning-input>
+                      <div  class="slds-p-around_small lgc-bg selectMenu slds-button slds-button_icon " style="width: min-content;">
+                        <lightning-button-menu alternative-text="Show menu" icon-size="xx-small">
+                            <lightning-menu-item class="viewrecords" data-name="selectallrecord" value="All" title="All" label="All" onclick={handleRecords}></lightning-menu-item>
+                            <lightning-menu-item class="viewrecords" data-name="selectedviewrecord" value="Selected" title="Selected" label="Selected" onclick={handleRecords}></lightning-menu-item>
+                        </lightning-button-menu>
+                      </div>
+                    </th>
+                  </template>
+                    <template for:each={fieldsLable} for:item="fldLable" for:index="index"> 
+                      <th scope="col" key={fldLable.Name} style="padding: 0px 0px 0px 0px;">  
+                        <div class="slds-truncate tdcontent"  title={fldLable.Name} >
+                          <template if:false={ShortingEnable}>{fldLable.Name}</template>
+                          <template if:true={ColumnSearchEnable}> 
+                            <template if:true={fldLable.searchenbl}>                    
+                              <lightning-button variant="base"  name={index} title="Search" icon-name="utility:search" class="slds-m-right_xxx-small Search searchiconPosition" onclick={handlerColumnSearch}></lightning-button>
+                            </template>
+                          </template>
+                          <template if:true={ShortingEnable}>
+                            <template if:true={fldLable.sortenbl}>
+                              <div style="padding: 0px 0px 0px 18px;cursor: pointer;" class="slds-th__action slds-text-link--reset resetElmntClass NonSelectedBorderOrgType NonSelectedBorderOrgTypeDwn" data-value={index} onclick={handlesortColumn}>
+                                {fldLable.Name}
+                                <div class="markIconUp"  if:false={isascdsc}>&nbsp;  &#9650;</div>
+                                <div class="markIconDown"  if:true={isascdsc}>&nbsp;  &#9660;</div>                                                            
+                              </div>
+                            </template>
+                            <template if:false={fldLable.sortenbl}>{fldLable.Name}</template>
+                         </template> 
+                         
+                        </div>                       
+                        <lightning-input  data-inputval="headersearchval" variant="label-hidden" placeholder={fldLable.Name} class={columnsearchSLDS}  type="search" name={index} onchange={handleKeyChange} > </lightning-input>
+                      </th>  
+                    </template>
+                  </tr>  
+                </thead>  
+                <tbody>  
+                  <!-- Use the Apex model and controller to fetch server side data--> 
+                  <template if:true={Recordsdata} >  
+                  <template for:each={Recordsdata} for:item="oneRecord" for:index="index">  
+                      <tr key={oneRecord.Id}> 
+                        <template if:true={SelectRowAction}>
+                        <td class="slds-text-align_left" role="gridcell">
+                              <template if:true={oneRecord.selectedrec}>
+                                  <lightning-input type="checkbox" id={oneRecord.Id} checked  name={oneRecord.recindex} class="recordselctbox" onchange={handleSelectedRec}></lightning-input>
+                              </template>
+                              <template if:false={oneRecord.selectedrec}>
+                                  <lightning-input type="checkbox" id={oneRecord.Id}  name={oneRecord.recindex} class="recordselctbox" onchange={handleSelectedRec}></lightning-input>
+                              </template>
+                          
+                        </td>
+                      </template>
+                        <template for:each={fieldsApiName} for:item="fldName"> 
+                          <td key={fldName} data-recodid={oneRecord.Id} data-tdname={fldName} ondblclick={editrecordfield}>
+                            <template if:true={InlineEditEnable}>
+                              <div data-class="editcompid"   data-id={oneRecord.Id} data-name={fldName} style="display: none;" class="slds-is-absolute slds-popover uiInlinePanel--default uiInlinePanel open">
+                                <c-recordeditinline  oncloseupdatepopup={closeupdatepopup} recordid={oneRecord.Id} objectname={objectname} fieldname={fldName}></c-recordeditinline> 
+                              </div> 
+                            </template>
+                            <div data-class="outputvalueid" data-id={oneRecord.Id} data-name={fldName} style="display: block;">
+                              <c-generic-table-cell cell-field-name={fldName} cell-data={oneRecord} ></c-generic-table-cell>                              
+                            </div>
+                          </td>  
+                        </template> 
+                      </tr>  
+                    </template>   
+                  </template>
+                  
+                </tbody>  
+              </table>  
+            </template> 
+              
+          </div> 
+          <template if:true={paginationEnable}> 
+            <p class="slds-m-vertical_medium content slds-text-align_center">
+            Total records: <b>{recordsDatacount} </b> Page <b>{currentpage}</b> of  
+            <b> {totalPages}</b></p> 
+            <div class="slds-m-around_medium slds-text-align_center">
+            <lightning-layout-item>  
+                <lightning-button label="First" icon-name="utility:chevronleft" onclick={handleFirst}  
+                  disabled={showFirstButton}></lightning-button>  
+              </lightning-layout-item>  
+              <lightning-layout-item>  
+                <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={handlePrevious}  
+                  disabled={showFirstButton}></lightning-button>  
+              </lightning-layout-item>  
+             <!-- <lightning-layout-item flexibility="grow"></lightning-layout-item>  -->
+              <lightning-layout-item>  
+                <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={handleNext}  
+                  disabled={showLastButton}></lightning-button>  
+              </lightning-layout-item>  
+              <lightning-layout-item>  
+                <lightning-button label="Last" icon-name="utility:chevronright" icon-position="right" onclick={handleLast}  
+                  disabled={showLastButton}></lightning-button>  
+              </lightning-layout-item> 
+              </div> 
+            </template>     
+        </lightning-card>  
+      </template>

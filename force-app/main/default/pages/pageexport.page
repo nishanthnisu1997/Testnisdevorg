@@ -1,0 +1,45 @@
+<apex:page controller="classexport"  contentType="{!renderAsExcel}" sidebar="false">
+
+      <Apex:form >  
+          <Apex:pageBlock Title="Account" id="pb1" rendered="{!pb1}" >
+          
+          <style>
+           .rg1 {background-color: lightblue; color:black; background-image:none}
+           .rg2 {background-color: white; color:black; background-image:none}
+           .SelectlistStyle {background-color: lightblue; color:black; font-size: 100%; background-image:none}
+           .myClass{
+                color:white !important;
+                background: #66b3ff !important;
+                }
+        </style>  
+              <Apex:commandButton value="Export as Excel" action="{!SaveAsExcel}" StyleClass="myClass"/>
+              <Apex:commandButton value="Export as Word" action="{!SaveAsWord}" StyleClass="myClass" />
+          </Apex:pageBlock>
+    
+          <Apex:pageBlock >
+            <!--Account Table -->
+               <apex:outputPanel id="acctTable">
+                      <apex:PageblockTable value="{!acct}" var="acc" border="1" cellpadding="2" cellspacing="1" rowClasses="rg1,rg2">
+                      
+                          <apex:column value="{!acc.Name}">
+                          <apex:facet name="header">Account Name</apex:facet>
+                          </apex:column>
+                          
+                          <apex:column value="{!acc.BillingCountry}">
+                          <apex:facet name="header">Billing Country</apex:facet>
+                          </apex:column>
+                          
+                          <apex:column value="{!acc.BillingState}">
+                          <apex:facet name="header">Billing State</apex:facet>
+                          </apex:column>
+                          
+                          <apex:column value="{!acc.BillingCity }">
+                          <apex:facet name="header">Billing City</apex:facet>
+                          </apex:column>
+                          
+                      </apex:PageBlocktable>
+                      </apex:outputPanel>
+                
+          </Apex:pageBlock>
+                  
+      </Apex:form></apex:page>

@@ -1,0 +1,14 @@
+<template>
+    <lightning-card>
+        <template if:true={contacts.data}>
+        <template for:each={contacts.data} for:item="contact">
+            
+            <lightning-tile label=LastName key={contact.Id}>
+                <p class="slds-truncate" title={contact.LastName}>{contact.LastName}</p>
+                <p class="slds-truncate" title={contact.FirstName}>{contact.FirstName}</p>
+
+            </lightning-tile>
+        </template>
+</template>
+</lightning-card>
+</template>

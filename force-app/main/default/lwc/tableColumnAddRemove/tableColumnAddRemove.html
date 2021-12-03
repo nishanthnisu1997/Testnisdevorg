@@ -1,0 +1,21 @@
+<template>
+    <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">        
+        <div class="slds-dropdown slds-dropdown_right slds-dropdown_small " style="margin: -13px -53px 0px 0px;">
+            <ul class="slds-dropdown__list" role="menu" aria-label="Show More" style="margin: 5px 0px 0px 13px;">
+                    
+            <template for:each={columnManuSelect} for:item="fldLable">
+                <li class="slds-dropdown__item slds-is-selected" role="presentation" key={fldLable.key}>
+                    <div if:true={fldLable.show}>
+                        <lightning-icon icon-name="utility:check" title={fldLable.key} onclick={showhidecolumnhandler} alternative-text={fldLable.key}  size="xx-small" class="slds-icon_container slds-icon slds-input__icon slds-input__icon_left"></lightning-icon>
+                        <span class="slds-truncate" title={fldLable.key}>{fldLable.value}</span>
+                    </div>
+                    <div if:false={fldLable.show}>                        
+                        <lightning-icon icon-name="utility:close" title={fldLable.key} onclick={showhidecolumnhandler} alternative-text={fldLable.key}  size="xx-small" class="slds-icon_container slds-icon slds-input__icon slds-input__icon_right "></lightning-icon>
+                        <span class="slds-truncate" title={fldLable.key}>{fldLable.value}</span>
+                    </div>
+                </li>
+            </template>
+           </ul>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,14 @@
+<apex:page standardcontroller="Account">
+    <apex:form >
+        
+    <apex:pageblock Title="New Account">
+        <apex:commandButton value="Save" action="{! save}"/>
+    <apex:pageBlockSection >
+        <apex:inputField value="{!Account.Name }"/>
+        <apex:inputField value="{!Account.Type }"/>
+        <apex:inputField value="{!Account.Rating }"/>
+        </apex:pageBlockSection> 
+    </apex:pageblock>
+    </apex:form>
+
+</apex:page>

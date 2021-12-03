@@ -1,0 +1,18 @@
+<apex:page standardController="Account" recordSetVar="accounts" >
+    <apex:form >
+    <apex:pageBlock title="displayaccount">
+         <apex:selectList value="{! filterId}" size="1">
+                <apex:selectOptions value="{! listviewoptions}" />
+                <apex:actionSupport event="onchange"/>
+             </apex:selectList>
+        <apex:pageBlockSection >
+                                   <apex:inlineEditSupport event="ondblclick"/>
+        <apex:dataTable value="{! accounts}" var="a">
+        <apex:column headerValue="Name" >
+            <apex:outputField value="{!a.Name}"/>
+            </apex:column> 
+            </apex:dataTable>
+            </apex:pageBlockSection>
+                </apex:pageBlock>
+    </apex:form>
+</apex:page>

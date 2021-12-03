@@ -1,0 +1,17 @@
+<apex:page controller="foraddition" >
+    <apex:form >
+    <apex:pageBlock title="Addition">
+        <apex:pageBlockSection columns="1">
+        <apex:inputText value="{! a}"/>
+                 <apex:inputText value="{! b}"/>
+        <apex:commandButton value="add" action="{! add}"/>
+                    <apex:commandButton value="sub" action="{! sub}"/>
+        <apex:commandButton value="mul" action="{! mul}"/>
+        <apex:commandButton value="div" action="{! div}"/>
+
+                    <apex:inputText value="{! ans}"/>
+
+            </apex:pageBlockSection>  
+ </apex:pageBlock>
+    </apex:form>
+</apex:page>

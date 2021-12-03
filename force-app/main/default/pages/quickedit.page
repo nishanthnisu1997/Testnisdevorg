@@ -1,0 +1,21 @@
+<apex:page standardController="Account" recordSetVar="acc">
+
+<style>
+        .headerStyle{background-color:#638658;color:#FFFFFF}
+</style>
+
+ <form>
+<apex:pageBlock >     
+    
+
+<apex:pageBlockTable value="{!acc}" var="a">
+
+  <apex:column headerValue="Name" headerClass="headerStyle">
+      <apex:outputText value="{a.Name}"/>
+    </apex:column>
+    <apex:column value="{!a.phone}"/>
+
+    </apex:pageBlockTable>
+    </apex:pageBlock>
+ </form>
+    </apex:page>

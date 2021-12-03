@@ -1,0 +1,30 @@
+<apex:page controller="wrapperExample" >
+<apex:form >
+    <apex:pageBlock id="PB1">
+        <apex:pageBlockSection >
+            <apex:pageBlockTable value="{!wrapAcnts}"  var="acc">
+                <apex:column >
+                    <apex:inputCheckbox value="{!acc.checkbox}"/>
+                          </apex:column>
+                <apex:column value="{!acc.accName}">
+                          </apex:column>
+<apex:column value="{!acc.accPhone}">
+                          </apex:column>
+                <apex:column value="{!acc.accRating}">
+                          </apex:column>
+                
+            </apex:pageBlockTable>
+             <apex:pageBlockTable value="{!wrapAcntssel}" var="acc">
+                <apex:column value="{!acc.accName}">
+                          </apex:column>
+<apex:column value="{!acc.accPhone}">
+                          </apex:column>
+                <apex:column value="{!acc.accRating}">
+                          </apex:column>
+                
+            </apex:pageBlockTable>
+            <apex:commandButton value="display" action="{!displayacnts}" reRender="PB1" />
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    </apex:form>
+</apex:page>

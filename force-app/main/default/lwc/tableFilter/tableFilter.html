@@ -1,0 +1,13 @@
+<template>
+        <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" onclick={tablefltrhandler}>
+                        <!--style="margin: -13px -14px 0px 0px;"-->        
+                <div class="slds-dropdown slds-dropdown_right slds-dropdown_small" style="margin: -12px -17px 0px 0px;" >
+                <lightning-input type="date"  class="slds-m-bottom_small" label="Created Date :" style="margin: 0px 5px 10px 5px;" 
+                        value={startdate} onchange={cretaeddateFrom}></lightning-input>
+                        <lightning-input type="date"  class="slds-m-bottom_small" label="To Created Date :" style="margin: 0px 5px 10px 5px;" 
+                                value={enddate} min={startdate} onchange={cretaeddateto}></lightning-input>
+                        <lightning-button variant="brand" label="Set Filter" title="Set Filter" onclick={handleForPutFilter} class="slds-m-left_x-small slds-align_absolute-center"></lightning-button>
+
+                </div>
+        </div>
+</template>

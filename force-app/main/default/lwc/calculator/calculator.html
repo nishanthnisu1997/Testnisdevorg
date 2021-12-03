@@ -1,0 +1,74 @@
+<template>
+    <!--lightning-card>
+        <div slot="title">
+            <h3> 
+                Calculator
+             </h3>
+          </div>  
+        <lightning-input type='Text' label="First Value" value={fVal} onchange={handleFval}></lightning-input>
+        <lightning-input type='number' label="Second Value" value={sVal} onchange={handleSval}></lightning-input>
+
+        <Lightning-button label="1" onclick={handleOne}></Lightning-button>
+        <Lightning-button label="2" onclick={calc} ></Lightning-button>
+        <Lightning-button label="+" onclick={addition}></Lightning-button>
+        <Lightning-button label="-" onclick={subtraction}></Lightning-button>
+        <Lightning-button label="*" onclick={multiplication}></Lightning-button>
+        <Lightning-button label="/" onclick={division}></Lightning-button>
+        <Lightning-button label="%" onclick={modulo}></Lightning-button>
+
+        <div slot="footer">
+            <h3>         <p>Result: {result}</p>
+
+             </h3>
+          </div>  
+    </lightning-card-->
+    <Lightning-card class="card">
+        <div slot="title">
+            <h3>
+                Calculator
+            </h3> </br>
+            <table>
+
+                <tbody>
+                    <tr>
+                        <td colspan="3"><input style="height:25px" type="Text" value={fVal}
+                                onchange={handleFval}></input></td>
+                        <td><button style="width:40px" onclick={handleClear}>c</button></td>
+
+
+                    </tr>
+                    <tr>
+                        <td><button class="but" name="one" onclick={handleOne}>1</button></td>
+                        <td><button class="but" name="two" onclick={handleOne}>2</button></td>
+                        <td><button class="but" name="three" onclick={handleOne}>3</button></td>
+                        <td><button class="but" name="/" onclick={handleOne}>/</button></td>
+                    </tr>
+                    <tr>
+                        <td><button class="but" name="four" onclick={handleOne}>4</button></td>
+                        <td><button class="but" name="five" onclick={handleOne}>5</button></td>
+                        <td><button class="but" name="six" onclick={handleOne}>6</button></td>
+                        <td><button class="but" name="-" onclick={handleOne}>-</button></td>
+                    </tr>
+                    <tr>
+                        <td><button class="but" name="seven" onclick={handleOne}>7</button></td>
+                        <td><button class="but" name="eight" onclick={handleOne}>8</button></td>
+                        <td><button class="but" name="nine" onclick={handleOne}>9</button></td>
+                        <td><button class="but" name="+" onclick={handleOne}>+</button></td>
+                    </tr>
+                    <tr>
+                        <td><button class="but" name="." onclick={handleOne}>.</button></td>
+                        <td><button class="but" name="0" onclick={handleOne}>0</button></td>
+                        <td><button class="but" name="=" onclick={handleResult}>=</button></td>
+                        <td><button class="but" name="*" onclick={handleOne}>x</button></td>
+                    </tr>
+
+
+
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </Lightning-card>
+</template>

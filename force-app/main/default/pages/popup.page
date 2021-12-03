@@ -1,0 +1,55 @@
+<apex:page controller="tstpopup">
+    <apex:form >
+        <apex:pageBlock >
+           <apex:pageBlockTable value="{!leads}" var="led">
+           <apex:column headerValue="Name">
+           <apex:commandLink value="{!led.Name}" action="{!showpopup}" >
+           <apex:param name="window" value="{!led.id}" assignTo="{!leadid}"/>
+           </apex:commandLink>
+          </apex:column>
+           </apex:pageBlockTable>
+        
+ 
+        <apex:outputPanel id="tstpopup">
+        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}">
+           
+                <apex:inputfield value="{!ll.name}"/><br/><br/>
+             <apex:inputfield value="{!ll.Email}"/><br/><br/>
+               <apex:inputfield value="{!ll.company}"/><br/><br/>
+               <apex:inputfield value="{!ll.Phone}"/><br/><br/>
+               <apex:inputfield value="{!ll.Country}"/><br/><br/>
+
+               
+                 <br/>
+                <apex:commandButton value="cancel" action="{!closePopup}" rerender="tstpopup"/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+ </apex:pageBlock>
+    </apex:form>
+ 
+    <style type="text/css">
+        .custPopup{
+            background-color: lightgrey;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            top:100px;
+           
+        }
+        .popupBackground{
+            background-color:green;
+            opacity: 0.20;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+
+    </style>
+</apex:page>

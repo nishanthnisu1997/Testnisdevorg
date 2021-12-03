@@ -1,0 +1,55 @@
+<template> 
+ <!-- <Lightning-button class="slds-m-right_small" label="CreateRecord" onclick={handlClick}></Lightning-button>
+  <Lightning-button class="slds-m-right_small" label="DateIteration" onclick={handlClickDate}></Lightning-button>
+  <Lightning-button label="Calculator" onclick={handlClickCalc}></Lightning-button>-->
+<div class="flex-container">
+  <div class="flex1">
+    <Lightning-card >
+      <c-date-iteration></c-date-iteration>
+    </Lightning-card>
+    </div>
+  <div class="flex">
+  <lightning-card >
+      <div slot="title">
+        <h3> 
+            <lightning-icon icon-name="standard:account" size="small"></lightning-icon> Create an Account Using Apex Controller in LWC           
+         </h3>
+      </div>    
+  
+     <p class="slds-p-horizontal_small">
+       <lightning-input type="text" label="Name" value={getAccountRecord.accName} onchange={nameInpChange}></lightning-input>
+      </p>
+  
+      <p class="slds-p-horizontal_small">
+       <lightning-input type="text" label="Phone" value={getAccountRecord.accPhone} onchange={phoneInpChange}></lightning-input>
+      </p>
+  
+      <p class="slds-p-horizontal_small">
+        <lightning-combobox label="Type" value={getAccountRecord.accType} placeholder="Select" options={picklistvalues} onchange={typeInpChange}>
+        </lightning-combobox>       </p>
+   
+       <p class="slds-p-horizontal_small">
+        <lightning-input type="text" label="Website" value={getAccountRecord.accWebsite} onchange={websiteInpChange}></lightning-input>
+       </p>
+         
+  
+       <p class="slds-p-horizontal_small">
+        <lightning-input type="text" label="Account Site" value={getAccountRecord.accSite} onchange={accSiteChange}></lightning-input>       
+       </p> 
+       
+     <div slot="footer">
+       <lightning-button class="slds-m-right_small" label="Submit" onclick={saveAccountAction} variant="brand"></lightning-button>
+       <lightning-button  label="close" onclick={handlClose} variant="brand"></lightning-button>
+ 
+      </div> 
+     
+</lightning-card>
+</div>
+
+<div class="flex">
+<Lightning-card >
+  <c-calculator></c-calculator>
+</Lightning-card>
+</div>
+</div>
+</template>

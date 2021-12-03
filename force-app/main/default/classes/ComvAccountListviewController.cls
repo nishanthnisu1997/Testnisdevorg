@@ -1,0 +1,1 @@
+public with sharing class ComvAccountListviewController { @AuraEnabled(cacheable = true) public static ComvTable.ManageRecordsController.tableWrapper getAccountListviewTableMethod(String searchString){ String ObjectName='listviewAccount'; return ComvTable.ManageRecordsController.getObjectsList(ObjectName);}}

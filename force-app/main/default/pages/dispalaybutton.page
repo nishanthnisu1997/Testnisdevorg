@@ -1,0 +1,19 @@
+<apex:page controller="fordisplayall">
+    <apex:form >
+    <apex:pageBlock title="list of account">
+        <apex:inlineEditSupport event="ondblclick"/>
+        <apex:commandButton action="{! showall}" value="showall" reRender="m"/>
+           <apex:commandButton action="{! showdirect}" value="showdirect" reRender="m"/>
+           <apex:commandButton action="{! showchannel}" value="showchannel" reRender="m"/>
+        <apex:pageBlockTable value="{! sample}" var="a" id="m">
+            <apex:column value="{!a.Name}"/>
+                        <apex:column value="{!a.Type}"/>
+                                    <apex:column headervalue="Action">
+                                        <apex:commandButton action="{! updation}" value="update"/>
+            </apex:column>
+
+        </apex:pageBlockTable>
+        
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

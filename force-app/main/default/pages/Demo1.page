@@ -1,0 +1,17 @@
+<apex:page standardController="Contact" >
+<apex:form >
+    <apex:pageBlock title="CONTACT">
+        <apex:pageBlockSection title="CONTACT DETAILS">
+        <apex:inputField value="{! Contact.lastName}"/>
+            <apex:inputField value="{! Contact.LeadSource}"/>
+            <apex:commandButton action="{! save }" value="save"/>
+              </apex:pageBlockSection>
+       </apex:pageBlock>
+           <apex:pageBlock title="diplaying contact">
+          <apex:pageBlockSection >
+                <apex:outputField value="{! Contact.lastName}" />
+              <apex:inlineEditSupport event="ondblClick"/>
+               </apex:pageBlockSection>
+       </apex:pageBlock>
+    </apex:form>
+</apex:page>

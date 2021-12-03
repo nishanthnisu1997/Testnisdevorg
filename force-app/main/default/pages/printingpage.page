@@ -1,0 +1,33 @@
+<apex:page standardController="Account" recordSetVar="accounts" extensions="classrequirement"  lightningStylesheets="true"  contentType="{! renderAsExcel}" docType="{!doctypevar}" >
+    <apex:panelgrid width="100%" style="text-align:right;">
+        <apex:form >
+            <apex:commandlink value="Print" onclick="window.print();"></apex:commandlink>
+        </apex:form>
+    </apex:panelgrid>
+        <apex:pageBlock Title="Account">        
+ <!--Account Table -->
+               <apex:outputPanel id="acctTable">
+                      <apex:PageblockTable value="{!printacnts}" var="acc" border="1" cellpadding="2" cellspacing="1">
+                      
+                          <apex:column value="{!acc.Name}">
+                          <apex:facet name="header">Account Name</apex:facet>
+                          </apex:column>
+                          
+                          <apex:column value="{!acc.Type}">
+                          <apex:facet name="header">Type</apex:facet>
+                          </apex:column>
+                          
+                          <apex:column value="{!acc.AccountNumber}">
+                          <apex:facet name="header">AccountNumber</apex:facet>
+                          </apex:column>
+                          
+                          <apex:column value="{!acc.Phone }">
+                          <apex:facet name="header">Phone</apex:facet>
+                          </apex:column>
+                   </apex:PageblockTable>
+                      </apex:outputPanel>
+                          
+                          Exportedby={!$User.FirstName} {!$User.LastName}.<br/>
+                          Exporteddate= {!NOW()}.
+    </apex:pageBlock>
+</apex:page>

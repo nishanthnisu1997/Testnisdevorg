@@ -1,0 +1,46 @@
+<template>
+<!-- <lightning-button label="show contacts" onclick={getContacts}></lightning-button>-->
+  <lightning-input type="checkbox" checked={show} onchange={getContacts}></lightning-input>
+  <lightning-button class="slds-align_absolute-center" label="modal" onclick={newaccount} ></lightning-button>
+
+  <template if:true={show}>
+    <lightning-card>
+        <lightning-datatable 
+        key-field = "Id"
+                data={conlist}
+                columns={column}
+        ></lightning-datatable>
+</lightning-card>
+
+</template>
+<lightning-card title='picklistvalues'>
+    <lightning-combobox name="progress" label="Salutation" placeholder="Select" options={picklistvalues} onchange={handlechange}>
+    </lightning-combobox>
+    <select class="slds-select" name="optionSelect" onchange={handlechange}>
+        <option value={picklistvalues}>value={picklistvalues}</option>
+        </select>
+
+</lightning-card>
+
+<section if:true={shownew} role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+        <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+              <svg class="slds-button__icon slds-button__icon_large" aria-hidden="false">
+              </svg>
+              <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Modal header</h2>
+            <p>create Contact</p>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <c-contact-creator></c-contact-creator>
+        </div>
+        <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={close}>Cancel</button>
+            <button class="slds-button slds-button_brand">Save</button>
+        </footer>
+    </div>
+</section>
+<div if:true={shownew} class="slds-backdrop slds-backdrop_open"></div>
+</template>

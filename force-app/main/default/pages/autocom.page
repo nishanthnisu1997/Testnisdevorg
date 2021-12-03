@@ -1,0 +1,5 @@
+<apex:page Controller="classautocom" docType="html-5.0">
+ <apex:form >
+  <apex:inputText list="{! listOfStrings}"/>
+ </apex:form>
+</apex:page>

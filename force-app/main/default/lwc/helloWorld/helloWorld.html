@@ -1,0 +1,21 @@
+<template>
+  <lightning-card>
+    <lightning-input type="number" label="number field" class="slds-m-around_x-large"  ></lightning-input>
+    <lightning-input type="checkbox" label="checkbox field" class="slds-m-around_x-large"  ></lightning-input>
+    <lightning-input type="search" label="search field" class="slds-m-around_x-large"  ></lightning-input>
+    <lightning-input type="color" label="color field" class="slds-m-around_x-large"  ></lightning-input>
+
+    <lightning-input type="text" label="text" class="slds-m-around_x-large"  ></lightning-input>
+    <lightning-input type="date" label="date field" class="slds-m-around_x-large"  ></lightning-input>
+  </lightning-card>
+  <lightning-card>
+    <lightning-record-view-form
+    record-id={recordId}
+    object-api-name={accountObject}>
+   <p>{nameValue}</p> 
+</lightning-record-view-form>
+  </lightning-card>
+  <lightning-card>
+    <p>current userid is :{userid}</p>
+  </lightning-card>
+</template>

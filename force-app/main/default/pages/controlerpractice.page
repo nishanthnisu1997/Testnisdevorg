@@ -1,0 +1,15 @@
+<apex:page controller="practice">
+         <apex:form >
+  
+    <apex:pageBlock >
+               <apex:commandButton value="Accounts" Action="{!acccc}"/>
+
+    <apex:pageBlockTable value="{!acts}" var="a">
+      
+        <apex:column value="{!a.Name}"/>
+        <apex:column value="{!a.Type}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+                         </apex:form>
+
+</apex:page>

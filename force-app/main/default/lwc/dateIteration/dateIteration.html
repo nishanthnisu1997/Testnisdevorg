@@ -1,0 +1,39 @@
+<template>
+    <lightning-card>
+        <h1>Monthly Date Display </h1>
+        <p class="timeDisplay" >Current Date : {onlyDate}-{onlyMonth}-{onlyYear} {curentdays}</p>
+        
+        <table id="tab">
+        <thead>
+            <tr>
+                <th>
+                    Date
+                </th>   
+                <th>
+                    Day
+                </th> 
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={storeDate} for:item="date">
+               <tr key={date}>
+                
+                <td>
+                    {date.strdate}
+                </td>
+                
+                <td>
+                    {date.strday}
+                </td>
+                
+               </tr>
+            </template>
+</tbody>
+</table>
+
+
+
+</lightning-card>
+
+
+</template>

@@ -1,0 +1,132 @@
+<template>
+ <!--   <h1 style='background-color:chartreuse;color:black' >This is my first page in lwc</h1>
+    <p style='background-color:beige;color:black' >Hello {name}</p>  
+    <lightning-card title="Detailshowing" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+            <lightning-input type="checkbox" label="Show details" onchange={handleChange}></lightning-input>
+            <template if:true={areDetailsVisible}>
+                <div class="slds-m-vertical_medium">
+                    These are the details!
+                </div>
+            </template>
+</div>
+</lightning-card>
+<lightning-card title="HelloForEach" icon-name="custom:custom14">
+    <ul class="slds-m-around_medium">
+        <template for:each={contacts} for:item="contact">
+            <li key={contact.Id}>
+                {contact.Name}, {contact.Title}
+            </li>
+        </template>
+    </ul>
+</lightning-card>
+<lightning-card title="HelloIterator" icon-name="custom:custom14">
+    <ul class="slds-m-around_medium">
+        <template iterator:it={contacts}>
+            <li key={it.value.Id}>
+                <div if:false={it.first} class="list-first">
+                <div if:false={it.last} class="list-last">             
+                    {it.value.Name}, {it.value.Title} 
+                </div> 
+
+                    </div>
+            </li>
+        </template>
+    </ul>
+</lightning-card>
+<lightning-card title="testing slds">
+    <h2 class="slds-text-heading_small slds-m-bottom_small">
+        vareirty of buttons
+    </h2>
+    <lightning-button variant="base" label="Base" title="Looks like a link" class="slds-m-left_x-small"></lightning-button>
+    <lightning-button label="Neutral" title="Non-primary action" class="slds-m-left_x-small"></lightning-button>
+    <lightning-button variant="destructive" label="Destructive" title="Destructive action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+
+    <h2 class="slds-text-heading_small slds-m-bottom_small">
+        vareirty of disabled-buttons
+    </h2>
+    <lightning-button variant="base" label="Base" title="Looks like a link" disabled class="slds-m-left_x-small"></lightning-button>
+    <h2 class="slds-text-heading_small slds-m-bottom_small">
+        vareirty of group-buttons
+    </h2>
+    <lightning-button-group>
+        <lightning-button label="Refresh"></lightning-button>
+        <lightning-button label="Edit"></lightning-button>
+        <lightning-button label="Save"></lightning-button>
+    </lightning-button-group>
+    <h2 class="slds-text-heading_small slds-m-bottom_small">
+        vareirty of icon-buttons
+    </h2>
+    <lightning-button-icon icon-name="utility:settings" alternative-text="Settings" variant="border-inverse" title="Settings"></lightning-button-icon>
+
+</lightning-card>
+<lightning-card>
+    <div class="slds-align_absolute-center">
+        <div class="slds-box slds-box_xx-small">
+            <h1>testing alignment using sldsstyle</h1>
+        </div>
+    </div>
+    <div class="slds-clearfix">
+        <div class="slds-float_right">
+            <div class="slds-border_top">
+                <p>test float</p>
+            </div>
+
+        </div>
+    </div>
+</lightning-card>-->
+<!--<lightning-card>
+    <template for:each={accountstore} for:item="acc">
+        <p key={acc.Id}>{acc.Name}</p>
+    </template>
+    <lightning-datatable key-field="Id" data={accountstore} columns={column}></lightning-datatable>
+</lightning-card>-->
+<Lightning-card>
+
+    <table class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered">
+        <thead>
+            <tr>
+                <th>
+                    Account name
+                </th>
+                <th>
+                    Phone
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Industry
+                </th>
+                <th>
+                    Action
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={accountstore} for:item="acc">
+               <tr key={acc.Id}>
+                <td>
+                    {acc.Name}
+                </td>
+                <td>
+                    {acc.Phone}
+                </td>
+                <td>
+                    {acc.Type}
+                </td>
+                <td>
+                    {acc.Industry}
+                </td>
+                <td>
+                    <lightning-button label="Edit" onclick={handleEdit}></lightning-button>
+                </td>
+               </tr>
+            </template>
+        </tbody>
+    </table>
+
+</Lightning-card>
+</template>

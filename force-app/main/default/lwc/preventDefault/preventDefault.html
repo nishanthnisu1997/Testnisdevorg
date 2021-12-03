@@ -1,0 +1,83 @@
+<template>
+    <lightning-card>
+      <div slot="title">
+        <h3> 
+            <lightning-icon icon-name="standard:account" size="small"></lightning-icon> Create an Account Using Apex Controller in LWC           
+         </h3>
+      </div>    
+  
+     <p class="slds-p-horizontal_small">
+       <lightning-input type="text" label="Name" value={getAccountRecord.Name} onchange={nameInpChange}></lightning-input>
+      </p>
+  
+      <p class="slds-p-horizontal_small">
+       <lightning-input type="text" label="Phone" value={getAccountRecord.Phone} onchange={phoneInpChange}></lightning-input>
+      </p>
+  
+      <p class="slds-p-horizontal_small">
+        <lightning-combobox name="progress" label="Type" value={getAccountRecord.Type} placeholder="Select" options={picklistvalues} onchange={typeInpChange}>
+        </lightning-combobox>       </p>
+   
+       <p class="slds-p-horizontal_small">
+        <lightning-input type="text" label="Website" value={getAccountRecord.Website} onchange={websiteInpChange}></lightning-input>
+       </p>
+         
+  
+       <p class="slds-p-horizontal_small">
+        <lightning-input type="text" label="Account Site" value={getAccountRecord.Site} onchange={accSiteChange}></lightning-input>       
+       </p> 
+       
+     <div slot="footer">
+       <lightning-button label="Submit" onclick={saveAccountAction} variant="brand"></lightning-button>
+     </div>  
+    </lightning-card>
+ <table class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols">
+        <thead>
+            <tr>
+                <th>
+                    Name 
+                </th>   
+                <th>
+                    Phone
+                </th> 
+                <th>
+                    Type
+                </th>
+                <th>
+                    Website
+                </th>
+                <th>
+                    Account Site
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={arrAcc} for:item="arr">
+            <tr key={arr.name}>
+                <td>
+                    {arr.Name}
+                </td>
+              <td>
+                    {arr.Phone}
+                </td>
+
+                <td>
+                   { arr.Type}
+                </td>
+                <td>
+                    {arr.Website}
+                </td>
+                <td>
+                   { arr.Site}
+                </td>
+                <td>
+                    <button value={arr.Name} onclick={handleRemove}>delete</button>
+                 </td>
+               </tr>
+               </template>
+</tbody>
+</table>
+</template>

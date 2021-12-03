@@ -1,0 +1,296 @@
+<apex:page standardController="Account" recordSetVar="accounts" extensions="testrequire" lightningStylesheets="true" >
+    <apex:pageMessages />
+    <apex:pageMessages rendered="true"/>
+
+<body>
+    <apex:sectionHeader title="Accounts List view"/>
+    
+    <apex:form > 
+         
+    <apex:pageblock id="Act_list">
+<div>
+         <apex:inputText value="{!searchkey}" style="margin-left:20%;width:40%;border-width:2px;border-color:black !important;"/>
+                <apex:commandButton value="Search" action="{!Searchhlp}" styleClass="buttonhov" rerender="Act_list"/>
+          <apex:commandButton value="Clear" action="{!clear}" styleClass="buttonhov" rerender="Act_list" />
+        <apex:commandButton value="New" action="{!showPopupnew}"  styleClass="buttonhov"  />
+    <apex:commandButton value="Import/Export" action="{!showPopupcsv}"  styleClass="buttonhov"  />
+                <apex:commandButton value="Delete" action="{!massdel}" styleClass="buttonhov"  />
+        </div> <br/>
+        <!-- Account display using table -->
+    <apex:pageBlockTable value="{!allacnts}" var="acc" headerClass="titleHeader" styleClass="table" >
+        
+        <apex:column style="padding:10px" ><apex:inputCheckbox value="{!isselesctcheckbox}" >
+            <apex:param name="accids" value="{!acc.id}" assignTo="{!tobedel}"/>
+            </apex:inputCheckbox>
+            </apex:column>
+        
+          <apex:column headerValue="Action">
+            <apex:commandLink value="Edit" action="{!showPopupedit}">
+           <apex:param name="accI" value="{!acc.Id}" assignTo="{!accId}"/>
+              </apex:commandLink>            &nbsp;
+                                   <apex:commandlink value="Delete" action="{!del}" onclick="if(!confirm('Are you sure?')) {return false;}">
+                            <apex:param name="accId" value="{!acc.Id}" assignTo="{!accId}"/>
+           </apex:commandlink> 
+        </apex:column>
+        <apex:column >
+        <apex:facet name="header" >   
+           <apex:commandLink action="{!sortvalue}" value="Account Name{!IF(sortExpression=='name',IF(sortDirection='ASC','▼','▲'),'')}" styleClass="titleHeader">
+             <apex:param value="name" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+        <apex:commandlink value="{!acc.Name}" action="{!showPopupdetail}">
+           <apex:param name="accId" value="{!acc.Id}" assignTo="{!accId}"/>
+            </apex:commandlink>
+        </apex:column>
+        <apex:column value="{!acc.Type}">
+                  <apex:facet name="header" >   
+           <apex:commandLink action="{!sortvalue}" value="Type{!IF(sortExpression=='Type',IF(sortDirection='ASC','▼','▲'),'')}" styleClass="titleHeader">
+               <apex:param value="Type" name="column" assignTo="{!sortExpression}" />
+           </apex:commandLink>
+         </apex:facet>  
+        </apex:column>
+        <apex:column value="{!acc.AccountNumber}">
+            <apex:facet name="header" >   
+           <apex:commandLink action="{!sortvalue}" value="AccountNumber{!IF(sortExpression=='AccountNumber',IF(sortDirection='ASC','▼','▲'),'')}" styleClass="titleHeader">
+               <apex:param value="AccountNumber" name="column" assignTo="{!sortExpression}" />
+           </apex:commandLink>
+         </apex:facet>
+        </apex:column>
+        <apex:column value="{!acc.Phone}">
+       <apex:facet name="header">
+           <apex:commandLink action="{!sortvalue}" value="Phone{!IF(sortExpression=='Phone',IF(sortDirection='ASC','▼','▲'),'')}" styleClass="titleHeader">
+               <apex:param value="Phone" name="column" assignTo="{!sortExpression}" />
+           </apex:commandLink>
+         </apex:facet>
+            </apex:column>
+        <apex:column value="{!acc.AccountSource}">
+            <apex:facet name="header" >   
+           <apex:commandLink action="{!sortvalue}" value="AccountSource{!IF(sortExpression=='AccountSource',IF(sortDirection='ASC','▼','▲'),'')}" styleClass="titleHeader">
+               <apex:param value="AccountSource" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+        </apex:column>
+        <apex:column value="{!acc.Rating}">
+            <apex:facet name="header" >   
+           <apex:commandLink action="{!sortvalue}" value="Rating{!IF(sortExpression=='Rating',IF(sortDirection='ASC','▼','▲'),'')}" styleClass="titleHeader">
+             <apex:param value="Rating" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+        </apex:column>
+                <apex:column value="{!acc.AnnualRevenue}">
+                    <apex:facet name="header" >   
+           <apex:commandLink action="{!sortvalue}" value="AnnualRevenue{!IF(sortExpression=='AnnualRevenue',IF(sortDirection='ASC','▼','▲'),'')}" styleClass="titleHeader">
+             <apex:param value="AnnualRevenue" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+        </apex:column>
+                        <apex:column value="{!acc.Site}">
+                            <apex:facet name="header" >   
+           <apex:commandLink action="{!sortvalue}" value="Site{!IF(sortExpression=='Site',IF(sortDirection='ASC','▼','▲'),'')}" styleClass="titleHeader">
+             <apex:param value="Site" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+        </apex:column>
+        </apex:pageBlockTable>
+        
+         <apex:outputPanel id="Csvpanel" >
+        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!csvpopup}"/>
+            <apex:outputPanel styleClass="custPopupcsv" layout="block" rendered="{!csvpopup}">
+                
+                <apex:commandButton value="X" action="{!closePopupcsv}" style="float:right;background-color: Tomato !important;color:white  !important;" /><br/>
+                <apex:pageBlockSection title="Chosse a File">
+                <apex:inputFile value="{!csvFileBody}"  filename="{!csvAsString}"/>
+                <apex:actionRegion > 
+           <apex:commandButton value="Import Account" action="{!importCSVFile}" styleclass="button"/>
+  </apex:actionRegion>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Export">
+                    <apex:commandButton value="Export as Excel" action="{!SaveAsExcel}" StyleClass="buttonhov"/>
+                </apex:pageBlockSection>
+            </apex:outputPanel> 
+        </apex:outputPanel>
+              <apex:outputPanel >
+        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!detailpopup}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!detailpopup}">
+     <apex:commandButton value="X" action="{!closePopupdetail}"  styleClass="buttonx" /><br/>
+                     <apex:commandlink value="Edit" action="{!showPopupedit}" style="background-color:seagreen;color:white;border-style: groove;border-width: medium;padding:10px;margin-left:50%;">
+           <apex:param name="accId" value="{!acnts.Id}" assignTo="{!accId}"/>
+                </apex:commandlink><br/><br/>
+                <apex:pageBlockSection title="Info" collapsible="true">
+               <apex:outputField value="{!acnts.Name}"/><br/><br/>
+             <apex:outputField value="{!acnts.Type}"/><br/><br/>
+             <apex:outputField value="{!acnts.AccountNumber}"/><br/><br/>
+             <apex:outputField value="{!acnts.Phone}"/><br/><br/>
+                                                </apex:pageBlockSection>
+                     <apex:pageBlockSection title="additional info">
+             <apex:outputField value="{!acnts.Website}"/><br/><br/>
+             <apex:outputField value="{!acnts.Industry}"/><br/><br/>
+             <apex:outputField value="{!acnts.AccountSource}"/><br/><br/>
+             <apex:outputField value="{!acnts.Rating}"/><br/><br/>
+             <apex:outputField value="{!acnts.AnnualRevenue}"/><br/><br/>
+             </apex:pageBlockSection>
+                  </apex:outputPanel>
+        </apex:outputPanel>
+            <apex:outputPanel >
+        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!editPopUp}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!editPopUp}">
+                <apex:commandButton value="X" action="{!closePopupedit}" styleClass="buttonx" /><br/><br/>
+
+                    <apex:pageBlockSection title="Info">
+             <apex:inputField value="{!acnts.Name}"/><br/><br/>
+             <apex:inputField value="{!acnts.Type}"/><br/><br/>
+             <apex:inputField value="{!acnts.AccountNumber}"/><br/><br/>
+             <apex:inputField value="{!acnts.Phone}"/><br/><br/>
+                                </apex:pageBlockSection>
+                     <apex:pageBlockSection title="additional info">
+             <apex:inputField value="{!acnts.Website}"/><br/><br/>
+             <apex:inputField value="{!acnts.Industry}"/><br/><br/>
+             <apex:inputField value="{!acnts.AccountSource}"/><br/><br/>
+             <apex:inputField value="{!acnts.Rating}"/><br/><br/>
+             <apex:inputField value="{!acnts.AnnualRevenue}"/><br/><br/>
+                  </apex:pageBlockSection>
+                 <br/>
+                                <apex:commandButton value="save" action="{!save}" reRender="Act_list"  styleClass="button"  />
+        
+            </apex:outputPanel>
+        </apex:outputPanel>
+               <apex:outputPanel >
+        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!newPopUp}"/>
+            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!newPopUp}">
+                  <apex:commandButton value="X" action="{!closePopupnew}" styleClass="buttonx" immediate="True"/><br/><br/>
+                    <apex:pageBlockSection title="Info">
+             <apex:inputField value="{!acnts.Name}"/><br/><br/>
+              <apex:inputField value="{!acnts.Phone}"/><br/><br/>
+                        </apex:pageBlockSection>
+                     <apex:pageBlockSection title="additional info">
+             <apex:inputField value="{!acnts.Type}"/><br/><br/>
+             <apex:inputField value="{!acnts.AccountNumber}"/><br/><br/>
+             <apex:inputField value="{!acnts.Website}"/><br/><br/>
+             <apex:inputField value="{!acnts.Industry}"/><br/><br/>
+             <apex:inputField value="{!acnts.AccountSource}"/><br/><br/>
+             <apex:inputField value="{!acnts.Rating}"/><br/><br/>
+             <apex:inputField value="{!acnts.AnnualRevenue}"/><br/><br/>
+                   </apex:pageBlockSection>
+              
+                                <apex:commandButton value="save" action="{!save}" reRender="Act_list"  styleClass="button"/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+           
+       
+<table style="width: 100%"><tr>
+    <td>
+        TotalRecords: <apex:outputText value=" {!totalRecs}"/>
+    </td>
+    <td align="center">
+         <apex:commandButton value="<<" rerender="Act_list" action="{!beginning}" disabled="{!prev}" styleClass="buttonhov"  />  
+            <apex:commandButton value="<" rerender="Act_list" action="{!previous}" disabled="{!prev}" styleClass="buttonhov" />  
+            <apex:commandButton value=">" rerender="Act_list" action="{!next}" disabled="{!nxt}" styleClass="buttonhov" />  
+            <apex:commandButton value=">>" rerender="Act_list" action="{!end}" disabled="{!nxt}" styleClass="buttonhov" /> 
+    </td>
+    <td align="right">
+        <apex:outputText value=" Page {!pagenumber} of {!CEILING(totalRecs/blockSize)}" />
+    </td>
+</tr></table>
+       
+        </apex:pageblock>
+     
+                    </apex:form>
+             </body>
+
+<!-- style for tha above age  -->
+                      <style type="text/css">
+                          .table{
+                         padding:10px !important;
+                          height:20px;
+                          }
+
+         .titleHeader {
+          background-color: seagreen !important;
+          padding:10px !important;
+          color:white !important;
+            }
+          
+          .pagibut{
+            color: seagreen !important; 
+                           
+                          }
+                          
+         .buttonhov:disabled{
+                                      background-color: white !important;
+}   
+         .button {
+            float : right;
+                background-color: seagreen !important;
+                          color: white ! important;
+             }
+           .buttonx {
+            background-color: Tomato !important;
+                          color:white  !important;
+             position:absolute !important;
+             margin-left:620px;
+              }
+            
+                   .button:hover {
+              background-color: rgb(92, 60, 66) !important;
+                          color:white  !important;
+                          }
+          
+             .buttonhov:hover {
+              background-color: rgb(92, 60, 66) !important;
+                          color:white  !important;
+                          }
+                          
+              .buttonhov{
+                                       background-color: seagreen !important; 
+                                                    color:white  !important;                           
+
+                          }
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup
+            displays in the center of the screen. First set the width. Then set
+            margin-left to negative half of what the width is. You can add
+            the height property for a fixed size pop up if you want.*/
+            width: 700px;
+            height:500px;
+            margin-left: -300px;
+            top:20px;
+             overflow-y:scroll;
+                          
+        }.popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 1350px;
+            height: 560px;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }   
+                             .custPopupcsv{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup
+            displays in the center of the screen. First set the width. Then set
+            margin-left to negative half of what the width is. You can add
+            the height property for a fixed size pop up if you want.*/
+            width: 500px;
+            height:300px;
+            margin-left: -300px;
+            top:20px;
+}                          
+        
+    </style>
+</apex:page>
